@@ -47,6 +47,11 @@ module.exports=((sequelize)=>{
             type:DataTypes.ENUM,
             values:["Admin","Customer","seller"],
             defaultValue:"Customer"
+        },
+        isActive:{
+            type:DataTypes.BOOLEAN,
+            allowNull:false,
+            defaultValue:true
         }
     })
 })
