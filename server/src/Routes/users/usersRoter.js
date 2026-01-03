@@ -1,8 +1,9 @@
 const {Router}=require("express");
-const {getHandlerUsers}=require("./hanldersUser")
+const {getAllHandlerUsers,postHandlerUser}=require("./hanldersUser")
 
 const userRouter=Router();
 
-userRouter.get("/",getHandlerUsers)
+userRouter.get("/",getAllHandlerUsers);
+userRouter.post("/postUser",postHandlerUser)
 
 module.exports=userRouter;
