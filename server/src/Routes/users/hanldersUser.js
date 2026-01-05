@@ -1,4 +1,4 @@
-const{postControllerUser,getControllerUsers}=require("./controllerUser")
+const{postControllerUser,getControllerUsers,getControllerUser,putControllerUser,deleteControllerUser}=require("./controllerUser")
 
 const getAllHandlerUsers =async (req,res)=>{
     try {
@@ -19,9 +19,40 @@ const postHandlerUser =async (req,res)=>{
         res.status(400).json({error:error.message});
     }
 }
-
+const getHandlerUser=async(req,res)=>{
+    const {id}=req.params;
+    try {
+        const userId=await getControllerUser(id);
+        res.status(200).json(userId);
+    } catch (error) {
+        res.status(400).json({error:error.message})
+    }
+};
+const putHandlerUser=async(req,res)=>{
+    const {id}=req.params;
+    const {email,password,country,isActive}=req.body;
+    try {
+        const updateUser=await putControllerUser({id,email,password,country,isActive});
+        res.status(200).json(updateUser);
+    } catch (error) {
+        
+    }
+};
+const deleteHandlerUser=async(req,res)=>{
+    const {id}=req.params;
+    try {
+        const deleteUser = await deleteControllerUser(id);
+        res.status(200).json(deleteUser);
+        
+    } catch (error) {
+        res.status(400).json({error:error.message});
+    }
+};
 
 
 module.exports={getAllHandlerUsers,
-    postHandlerUser
+    postHandlerUser,
+    getHandlerUser,
+    putHandlerUser,
+    deleteHandlerUser
 }
