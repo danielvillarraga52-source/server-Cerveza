@@ -40,6 +40,7 @@ const putHandlerUser=async(req,res)=>{
 };
 const deleteHandlerUser=async(req,res)=>{
     const {id}=req.params;
+    console.log(id)
     try {
         const deleteUser = await deleteControllerUser(id);
         res.status(200).json(deleteUser);
