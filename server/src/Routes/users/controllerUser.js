@@ -1,4 +1,7 @@
 const {Users}=require("../../db");
+const jwt =require("jsonwebtoken");
+const bcrypt=require("bcrypt");
+
 
 
 const getControllerUsers=async()=>{
@@ -9,8 +12,22 @@ const postControllerUser = async(FirstName,secondName,firstLastName,secondLastNa
     if(!FirstName || !firstLastName||!email||!password||!country){
         throw Error(`faltan datos obligatorios`);
     }
+    const emailVerify=await Users.findOne({where:{email:email}});
+    if(emailVerify){
+        throw Error("Email existe");
+    }
+    const salts=await bcrypt.genSalt(10);
+    const hashPassword=await bcrypt.hash(password,salts);
     const createUser=await Users.create({
-        FirstName,secondName,firstLastName,secondLastName,email,password,country,rol,isActive
+        FirstName,
+        secondName,
+        firstLastName,
+        secondLastName,
+        email,
+        password:hashPassword,
+        country,
+        rol,
+        isActive
     });
     return createUser;
 };
